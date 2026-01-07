@@ -1,0 +1,65 @@
+/* 공통 버튼 스타일 */
+.btn-notices {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+/* hover & active 애니메이션 */
+.btn-notices:hover {
+  transform: translateY(-1px); /* 살짝 위로 */
+}
+
+.btn-notices:active {
+  transform: translateY(1px); /* 클릭 시 눌린 효과 */
+}
+
+/* ===== 타입별 스타일 정의 ===== */
+
+/* 기본(default) 버튼 */
+.btn-notices.default {
+  background-color: #2d65f2;
+  color: white;
+}
+.btn-notices.default:hover {
+  background-color: #1a46c2;
+}
+
+/* 삭제(delete) 버튼 */
+.btn-notices.delete {
+  background-color: #e74c3c;
+  color: white;
+}
+.btn-notices.delete:hover {
+  background-color: #c0392b;
+}
+
+/* 수정(edit) 버튼 */
+.btn-notices.edit {
+  background-color: #f3b712;
+  color: white;
+}
+.btn-notices.edit:hover {
+  background-color: #d68910;
+}
+
+/* 저장(save) 버튼 */
+.btn-notices.save {
+  background-color: #27ae60;
+  color: white;
+}
+.btn-notices.save:hover {
+  background-color: #1e8449;
+}
+
+/* 취소(cancel) 버튼 */
+.btn-notices.cancel {
+  background-color: #95a5a6;
+  color: white;
+}
+.btn-notices.cancel:hover {
+  background-color: #7f8c8d;
+}

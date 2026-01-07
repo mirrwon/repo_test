@@ -1,0 +1,39 @@
+/* 103동 층별 호실 리스트 */
+.page103-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.floor-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.unit-button {
+  flex: 1;
+  padding: 14px 0;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.unit-button:hover {
+  transform: scale(1.03);
+}
+
+/* 입주 상태별 색상 */
+.unit-occupied {
+  background: rgb(198,246,213); /* 연한 초록색 */
+  color: rgb(34,34,34);
+}
+
+.unit-empty {
+  background: rgb(248,113,113); /* 연한 빨간색 */
+  color: white;
+}

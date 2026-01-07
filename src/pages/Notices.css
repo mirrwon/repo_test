@@ -1,0 +1,29 @@
+/* 공지사항 관리 전체 스타일 */
+
+/* 전체 컨테이너 */
+.notices-container {
+    max-width: 800px;                          /* 최대 너비 */
+    margin: 50px auto;                         /* 화면 가운데 정렬 */
+    padding: 20px 30px;                        /* 내부 여백 */
+    background: #ffffff;                       /* 배경색 흰색 */
+    border-radius: 12px;                       /* 모서리 둥글게 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 살짝 그림자 */
+    font-family: "Noto Sans KR", sans-serif;   /* 폰트 적용 */
+}
+
+/* 제목 영역 */
+.notices-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #2c3e50;
+    text-align: center; /* 가운데 정렬 */
+}
+
+/* 공지 없을 때 안내 문구 */
+.empty {
+    text-align: center;
+    color: #888;
+    font-size: 15px;
+    margin-top: 20px;
+}

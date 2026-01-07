@@ -1,0 +1,69 @@
+/* 전체 푸터 영역 */
+.footer {
+  background-color: #2d65f2; /* 상단 푸터 색상 (파란색) */
+  color: white; /* 텍스트 색상 */
+  bottom: 0;
+  left: 0;
+  width: 100%; /* 화면 전체 너비 차지 */
+  padding: 20px 0 0 0; /* 위쪽 여백 */
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15); /* 위쪽 그림자 */
+  z-index: 1000;
+}
+
+/* 푸터 내부 컨테이너 */
+.footer-container {
+  display: flex; /* 가로 정렬 */
+  justify-content: space-around; /* 항목들 사이 균등 배치 */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+/* 개별 섹션 (소개, 메뉴, 연락처) */
+.footer-section {
+  flex: 1; /* 균등 비율 */
+  min-width: 200px; /* 최소 너비 */
+  margin: 0 15px;
+}
+
+/* 섹션 제목 */
+.footer-section h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* 구분선 */
+  padding-bottom: 5px;
+}
+
+/* 공통 텍스트 & 링크 스타일 */
+.footer-section p,
+.footer-section li,
+.footer-section a {
+  font-size: 14px;
+  color: #f0f0f0;
+  text-decoration: none; /* 링크 밑줄 제거 */
+}
+
+/* 리스트 기본 스타일 제거 */
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* 리스트 항목 간격 */
+.footer-section li {
+  margin: 5px 0;
+}
+
+/* 링크 hover 효과 */
+.footer-section a:hover {
+  color: #ffdf6c; /* 노란색 강조 */
+}
+
+/* 푸터 하단 저작권 영역 */
+.footer-bottom {
+  text-align: center;
+  background-color: #234fc0; /* 조금 더 진한 파란색 */
+  padding: 10px 0;
+  margin-top: 10px;
+  font-size: 13px;
+}

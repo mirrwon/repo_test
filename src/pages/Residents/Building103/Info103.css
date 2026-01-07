@@ -1,0 +1,71 @@
+/* 🏷 상세정보 폼 컨테이너 */
+.info103-container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgb;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* 제목 */
+.info103-container h2 {
+  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  border-left: 4px solid rgb(74,144,226);
+  padding-left: 8px;
+}
+
+/* 입력창 스타일 */
+.info103-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid rgb(221,221,221);
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border 0.2s ease;
+}
+
+.info103-input:focus {
+  outline: none;
+  border-color: rgb(74,144,225);
+  background: rgb(240,246,255);
+}
+
+/* 버튼 영역 */
+.info103-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.info103-button {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.info103-save {
+  background: rgb(74,144,226);
+  color: white;
+}
+
+.info103-save:hover {
+  background: rgb(53,120,212);
+}
+
+.info103-delete {
+  background: rgb(230,57,70);
+  color: white;
+}
+
+.info103-delete:hover {
+  background: rgb(204,46,60);
+}

@@ -1,0 +1,36 @@
+
+/* 공지 입력 영역 (input + button) */
+.notice-input {
+    display: flex;
+    gap: 10px;          /* 요소 간격 */
+    margin-bottom: 25px;
+}
+
+.notice-input input {
+    flex: 1;                           /* 버튼 제외 전체 너비 차지 */
+    padding: 10px 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.notice-input input:focus {
+    outline: none;
+    border-color: #3498db;                        /* 포커스 시 파란색 테두리 */
+    box-shadow: 0 0 4px rgba(52, 152, 219, 0.4);  /* 은은한 블루 그림자 */
+}
+
+.notice-input button {
+    padding: 10px 18px;
+    background: #3498db;      /* 파란색 버튼 */
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;         /* hover 시 부드러운 효과 */
+}
+
+.notice-input button:hover {
+    background: #2980b9;      /* hover 시 진한 파란색 */
+}

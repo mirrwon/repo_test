@@ -1,0 +1,46 @@
+/* Home 페이지 전체 스타일 */
+
+/* 전체 컨테이너 */
+.home {
+  max-width: 600px; /* 화면 너비 제한 */
+  margin: 30px auto; /* 가운데 정렬 */
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 네비게이션 버튼 영역 */
+.nav-buttons {
+    display: flex;
+    gap: 16px;             /* 버튼 간격 */
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* 버튼 기본 스타일 */
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+/* 파란색 버튼 */
+.btn-blue {
+    background: #3b82f6;
+}
+
+.btn-blue:hover {
+    background: #2563eb;
+}
+
+/* 초록색 버튼 */
+.btn-green {
+    background: #10b981;
+}
+
+.btn-green:hover {
+    background: #059669;
+}

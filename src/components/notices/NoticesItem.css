@@ -1,0 +1,55 @@
+/* 공지 아이템 컨테이너 */
+.notice-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: #f9f9f9;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    transition: background 0.2s;
+}
+
+.notice-item:hover {
+    background: #f1f7ff; /* hover 시 살짝 강조 */
+}
+
+/* 공지 내용 영역 */
+.notice-content {
+    flex: 1; /* 남은 공간 꽉 채우기 */
+}
+
+.notice-text {
+    font-size: 16px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.notice-date {
+    font-size: 13px;
+    color: #888;
+}
+
+/* 버튼 영역 */
+.notice-actions .btns {
+    display: flex;
+    flex-direction: column; /* 버튼 세로 배치 */
+    gap: 6px; /* 버튼 사이 간격 */
+    margin-left: 15px;
+}
+
+/* 수정 모드 input */
+.notice-edit {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.notice-edit input {
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}

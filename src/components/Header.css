@@ -1,0 +1,47 @@
+/* 헤더 전체 영역 */
+.header {
+    background: #2563eb; /* 파란색 배경 */
+    color: white;
+    padding: 12px 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 살짝 그림자 */
+    position: sticky; /* 스크롤 내려도 항상 상단 고정 */
+    top: 0;
+    z-index: 1000; /* 다른 요소 위에 보이도록 */
+}
+
+/* 헤더 내부 컨테이너 (로고 + 네비게이션 정렬) */
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 로고 텍스트 */
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* 네비게이션 메뉴 (가로 정렬) */
+.nav {
+    display: flex;
+    gap: 20px; /* 메뉴 간격 */
+}
+
+/* 네비게이션 링크 */
+.nav-link {
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+/* 마우스 오버 효과 */
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+}

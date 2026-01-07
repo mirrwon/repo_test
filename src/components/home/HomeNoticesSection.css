@@ -1,0 +1,53 @@
+
+/* 공지사항 섹션 */
+.notice-section-home {
+  background: #f9f9f9;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* 은은한 그림자 */
+}
+
+.notice-section-home h2 {
+  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  border-left: 4px solid #4a90e2; /* 파란색 포인트 바 */
+  padding-left: 8px;
+}
+
+/* 📋 공지 리스트 */
+.notice-section-home ul {
+  list-style: none; /* 불릿 제거 */
+  padding: 0;
+  margin: 0;
+}
+
+.notice-item-home {
+  padding: 12px 10px;
+  border-bottom: 1px solid #ddd; /* 구분선 */
+  transition: background 0.2s ease;
+}
+
+.notice-item-home:last-child {
+  border-bottom: none; /* 마지막 요소는 구분선 제거 */
+}
+
+.notice-item-home:hover {
+  background: #f0f6ff; /* hover 시 은은한 파란 배경 */
+  border-radius: 8px;
+}
+
+.notice-item-home p {
+  margin: 0;
+  font-size: 16px;
+  color: #222;
+}
+
+/* 🕒 작성 날짜 스타일 */
+.notice-item-home .date {
+  display: block;
+  font-size: 13px;
+  color: #888;
+  margin-top: 6px;
+}
