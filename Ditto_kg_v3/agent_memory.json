@@ -1,0 +1,495 @@
+{
+  "notes": [
+    {
+      "id": "mem-0",
+      "text": "나는 꽃가루 알러지가 있어"
+    },
+    {
+      "id": "mem-1",
+      "text": "나는 식물을 잘 못 키워서 쉬운 걸 원해"
+    },
+    {
+      "id": "mem-2",
+      "text": "나는 꽃가루 알러지가 있어"
+    },
+    {
+      "id": "mem-3",
+      "text": "나는 식물을 잘 못 키워서 쉬운 걸 원해"
+    }
+  ],
+  "facts": {
+    "user": {
+      "user_num": 1,
+      "user_jid": "test01",
+      "name": "홍길동",
+      "created_at": "2026-01-09 10:00:00"
+    },
+    "user_profile": {
+      "user_num": 1,
+      "has_pet": 1,
+      "has_kid": 0,
+      "allergy_sensitive": 1,
+      "skill_level": "초보",
+      "watering_habit": "잊음",
+      "profile_extra": {
+        "pet_types": [
+          "CAT"
+        ],
+        "style_tags": [
+          "MINIMAL"
+        ]
+      },
+      "created_at": "2026-01-09 10:01:00",
+      "updated_at": "2026-01-09 10:01:30"
+    },
+    "reco_session": {
+      "session_id": "sess-001",
+      "user_num": 1,
+      "photo_id2": "N/A",
+      "session_kind": "plant_reco",
+      "status": "recommended",
+      "algo_version": "v0.1",
+      "params_json": {
+        "top_k": 5
+      },
+      "created_at": "2026-01-09 10:02:00",
+      "updated_at": "2026-01-09 10:02:30",
+      "note": "no-photo demo"
+    },
+    "plants": [
+      {
+        "plant_id": 101,
+        "name_ko": "스투키",
+        "care_difficulty": "쉬움",
+        "pet_caution": 1,
+        "human_allergy_caution": 0
+      },
+      {
+        "plant_id": 102,
+        "name_ko": "스킨답서스",
+        "care_difficulty": "쉬움",
+        "pet_caution": 1,
+        "human_allergy_caution": 0
+      },
+      {
+        "plant_id": 103,
+        "name_ko": "라벤더",
+        "care_difficulty": "보통",
+        "pet_caution": 1,
+        "human_allergy_caution": 1
+      }
+    ],
+    "recommendation_items": [
+      {
+        "rec_item_id": "rec-001",
+        "session_id": "sess-001",
+        "plant_id": 102,
+        "rank_no": 1,
+        "score_total": 0.91,
+        "score_style": 0.7,
+        "score_survival": 0.95,
+        "is_best": 1,
+        "reason_json": {
+          "why": [
+            "초보도 키우기 쉬움",
+            "향/알러지 주의 식물 회피"
+          ]
+        },
+        "kg_trace_json": {
+          "path": [
+            "UserProfile",
+            "Plant"
+          ]
+        },
+        "created_at": "2026-01-09 10:02:40"
+      }
+    ],
+    "extra": {}
+  },
+  "triples": [
+    {
+      "head": "User: this_user",
+      "relation": "has_constraint",
+      "tail": "pollen_allergy",
+      "source_id": "mem-0"
+    },
+    {
+      "head": "User: Profile",
+      "relation": "prefers",
+      "tail": "easy-care indoor plants",
+      "source_id": "mem-1"
+    },
+    {
+      "head": "User: Profile",
+      "relation": "gardening_skill",
+      "tail": "low / beginner",
+      "source_id": "mem-1"
+    },
+    {
+      "head": "User: Profile",
+      "relation": "location",
+      "tail": "indoor",
+      "source_id": "mem-1"
+    },
+    {
+      "head": "User:1",
+      "relation": "IS_A",
+      "tail": "User",
+      "source_id": "facts"
+    },
+    {
+      "head": "User:1",
+      "relation": "ATTR_USER_NUM",
+      "tail": "1",
+      "source_id": "facts"
+    },
+    {
+      "head": "User:1",
+      "relation": "ATTR_USER_JID",
+      "tail": "test01",
+      "source_id": "facts"
+    },
+    {
+      "head": "User:1",
+      "relation": "ATTR_NAME",
+      "tail": "홍길동",
+      "source_id": "facts"
+    },
+    {
+      "head": "User:1",
+      "relation": "ATTR_CREATED_AT",
+      "tail": "2026-01-09 10:00:00",
+      "source_id": "facts"
+    },
+    {
+      "head": "User:1",
+      "relation": "HAS_PROFILE",
+      "tail": "Profile:1",
+      "source_id": "facts"
+    },
+    {
+      "head": "Profile:1",
+      "relation": "IS_A",
+      "tail": "UserProfile",
+      "source_id": "facts"
+    },
+    {
+      "head": "Profile:1",
+      "relation": "ATTR_USER_NUM",
+      "tail": "1",
+      "source_id": "facts"
+    },
+    {
+      "head": "Profile:1",
+      "relation": "ATTR_HAS_PET",
+      "tail": "1",
+      "source_id": "facts"
+    },
+    {
+      "head": "Profile:1",
+      "relation": "ATTR_HAS_KID",
+      "tail": "0",
+      "source_id": "facts"
+    },
+    {
+      "head": "Profile:1",
+      "relation": "ATTR_ALLERGY_SENSITIVE",
+      "tail": "1",
+      "source_id": "facts"
+    },
+    {
+      "head": "Profile:1",
+      "relation": "ATTR_SKILL_LEVEL",
+      "tail": "초보",
+      "source_id": "facts"
+    },
+    {
+      "head": "Profile:1",
+      "relation": "ATTR_WATERING_HABIT",
+      "tail": "잊음",
+      "source_id": "facts"
+    },
+    {
+      "head": "Profile:1",
+      "relation": "ATTR_PROFILE_EXTRA",
+      "tail": "{\"pet_types\": [\"CAT\"], \"style_tags\": [\"MINIMAL\"]}",
+      "source_id": "facts"
+    },
+    {
+      "head": "Profile:1",
+      "relation": "ATTR_CREATED_AT",
+      "tail": "2026-01-09 10:01:00",
+      "source_id": "facts"
+    },
+    {
+      "head": "Profile:1",
+      "relation": "ATTR_UPDATED_AT",
+      "tail": "2026-01-09 10:01:30",
+      "source_id": "facts"
+    },
+    {
+      "head": "User:1",
+      "relation": "STARTED_SESSION",
+      "tail": "Session:sess-001",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "IS_A",
+      "tail": "RecoSession",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "ATTR_SESSION_ID",
+      "tail": "sess-001",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "ATTR_USER_NUM",
+      "tail": "1",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "ATTR_PHOTO_ID2",
+      "tail": "N/A",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "ATTR_SESSION_KIND",
+      "tail": "plant_reco",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "ATTR_STATUS",
+      "tail": "recommended",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "ATTR_ALGO_VERSION",
+      "tail": "v0.1",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "ATTR_PARAMS_JSON",
+      "tail": "{\"top_k\": 5}",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "ATTR_CREATED_AT",
+      "tail": "2026-01-09 10:02:00",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "ATTR_UPDATED_AT",
+      "tail": "2026-01-09 10:02:30",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "ATTR_NOTE",
+      "tail": "no-photo demo",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:101",
+      "relation": "IS_A",
+      "tail": "Plant",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:101",
+      "relation": "ATTR_PLANT_ID",
+      "tail": "101",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:101",
+      "relation": "ATTR_NAME_KO",
+      "tail": "스투키",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:101",
+      "relation": "ATTR_CARE_DIFFICULTY",
+      "tail": "쉬움",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:101",
+      "relation": "ATTR_PET_CAUTION",
+      "tail": "1",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:101",
+      "relation": "ATTR_HUMAN_ALLERGY_CAUTION",
+      "tail": "0",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:102",
+      "relation": "IS_A",
+      "tail": "Plant",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:102",
+      "relation": "ATTR_PLANT_ID",
+      "tail": "102",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:102",
+      "relation": "ATTR_NAME_KO",
+      "tail": "스킨답서스",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:102",
+      "relation": "ATTR_CARE_DIFFICULTY",
+      "tail": "쉬움",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:102",
+      "relation": "ATTR_PET_CAUTION",
+      "tail": "1",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:102",
+      "relation": "ATTR_HUMAN_ALLERGY_CAUTION",
+      "tail": "0",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:103",
+      "relation": "IS_A",
+      "tail": "Plant",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:103",
+      "relation": "ATTR_PLANT_ID",
+      "tail": "103",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:103",
+      "relation": "ATTR_NAME_KO",
+      "tail": "라벤더",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:103",
+      "relation": "ATTR_CARE_DIFFICULTY",
+      "tail": "보통",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:103",
+      "relation": "ATTR_PET_CAUTION",
+      "tail": "1",
+      "source_id": "facts"
+    },
+    {
+      "head": "Plant:103",
+      "relation": "ATTR_HUMAN_ALLERGY_CAUTION",
+      "tail": "1",
+      "source_id": "facts"
+    },
+    {
+      "head": "Session:sess-001",
+      "relation": "HAS_RECOMMENDATION_ITEM",
+      "tail": "RecItem:rec-001",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "IS_A",
+      "tail": "RecommendationItem",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "ATTR_REC_ITEM_ID",
+      "tail": "rec-001",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "ATTR_SESSION_ID",
+      "tail": "sess-001",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "ATTR_PLANT_ID",
+      "tail": "102",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "ATTR_RANK_NO",
+      "tail": "1",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "ATTR_SCORE_TOTAL",
+      "tail": "0.91",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "ATTR_SCORE_STYLE",
+      "tail": "0.7",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "ATTR_SCORE_SURVIVAL",
+      "tail": "0.95",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "ATTR_IS_BEST",
+      "tail": "1",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "ATTR_REASON_JSON",
+      "tail": "{\"why\": [\"초보도 키우기 쉬움\", \"향/알러지 주의 식물 회피\"]}",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "ATTR_KG_TRACE_JSON",
+      "tail": "{\"path\": [\"UserProfile\", \"Plant\"]}",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "ATTR_CREATED_AT",
+      "tail": "2026-01-09 10:02:40",
+      "source_id": "facts"
+    },
+    {
+      "head": "RecItem:rec-001",
+      "relation": "RECOMMENDS_PLANT",
+      "tail": "Plant:102",
+      "source_id": "facts"
+    }
+  ]
+}
