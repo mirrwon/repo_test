@@ -1,0 +1,52 @@
+{
+  "version": "v1",
+  "rules": [
+    {
+      "id": "R001",
+      "priority": 100,
+      "when": {
+        "all": [
+          { "fact": "user.has_pet", "op": "==", "value": true },
+          { "fact": "plant.pet_caution", "op": "==", "value": 1 }
+        ]
+      },
+      "then": {
+        "action": "EXCLUDE",
+        "reason_code": "PET_SAFETY",
+        "explanation_template": "반려동물이 있는 환경에서는 {plant.name_ko}가(이) 안전상 주의가 필요해 제외했어요."
+      }
+    },
+    {
+      "id": "R002",
+      "priority": 80,
+      "when": {
+        "all": [
+          { "fact": "user.allergy_sensitive", "op": "==", "value": true },
+          { "fact": "plant.human_allergy_caution", "op": "==", "value": 1 }
+        ]
+      },
+      "then": {
+        "action": "DOWNRANK",
+        "delta": -30,
+        "reason_code": "ALLERGY",
+        "explanation_template": "알러지 민감도가 있어서 {plant.name_ko}는 알러지 유발 가능성 때문에 점수를 낮췄어요."
+      }
+    },
+    {
+      "id": "R003",
+      "priority": 50,
+      "when": {
+        "all": [
+          { "fact": "user.skill_level", "op": "==", "value": "초보" },
+          { "fact": "plant.care_difficulty", "op": "in", "value": ["어려움"] }
+        ]
+      },
+      "then": {
+        "action": "DOWNRANK",
+        "delta": -20,
+        "reason_code": "BEGINNER_FRIENDLY",
+        "explanation_template": "초보 기준에서 관리 난이도가 높은 {plant.name_ko}는 추천 우선순위를 낮췄어요."
+      }
+    }
+  ]
+}
