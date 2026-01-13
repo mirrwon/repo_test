@@ -1,0 +1,110 @@
+db 3단 분리
+
+1. db 어뎁터 (Fetch)
+- db에서 raw한 데이터 그냥 가져오기만
+- 사용할때는 따로 뿌려주고
+
+2. 정규화/팩킹 레이어(Pack to FactStore)
+- DB row들을 FactStore 포맷으로 변환
+- 출력 : FactStore
+- 필수 키 존재 여부 : user_num, session_id, plant_id..)
+- 컬럼명 매핑
+- 문자열/숫자/불리언 통일
+
+3. kg 빌더 레이어 (Facts -> Triples)
+- FactStore -> KG triple
+- List[KGTriple]
+- 엣지규칙 확인
+- ATTR triple 생성이 누락/폭발하지 않는지 확인
+- rec_item -> plant 연결 확인
+
+
+현재는 데모로 이렇게 받고 있음 
+demo_fact = {..}
+1. rows = fetch_*() 원본 받기
+2. facts = pack_facts(rows...) -> FactStore 채우기
+3. update_facts_and_rebuild_kg_user_plant(new_facts=asdict(facts) or dict)
+	호출
+디버깅용 로그 포인트 (진짜 도움 되는 것만)
+
+[DB-FETCH] users row keys=..., user_num=...
+[DB-FETCH] plants count=...
+[FACTS-PACK] missing_keys=[...] (있으면 바로 에러)
+[KG-BUILD] nodes: user/profile/session/rec/plants count
+[KG-BUILD] edges count + rec_item->plant 연결 실패 목록
+
+-----------------------------------------------------------------------
+1/12 
+"Ditto_kg_v3"
+3단 구조( DB Fetch -> Facts Pack -> KG Build) + 
+		(메모리/Chroma/LLM/Agent)
+
+-파일구조
+Ditto_kg_v3/
+  app.py 			- 전체 오케스트레이션
+  config.py			- 전체적인 path 정리
+  logging_utils.py		- log로 확인
+  models.py
+  memory_store.py
+  db_adapter.py		- DB Fetch전용(차후 db랑 연결하는 방향)
+  facts_pack.py		- 팩킹/정규화 전용
+  kg_builder.py		- Facts -> Triples
+  chroma_store.py		- chromadb 저장소
+  llm_client.py		- 
+  agent.py			- 임베딩/노트추출/답변
+
+
+
+----- DB에 spot 관련 정보가 추가 된다면
+1) DB Fetch에 spot 관련 함수 추가
+
+예:
+
+fetch_room_photos(user_num or session_id)
+fetch_room_spots(photo_id)
+fetch_spot_light_conditions(spot_id)
+fetch_photo_features(photo_id) …
+
+→ 여기서는 그냥 가져오기만.
+
+2) Facts에 spot 관련 필드 추가 + pack 함수 확장
+
+FactStore에:
+room_photos: List[dict]
+room_spots: List[dict]
+spot_light_conditions: List[dict]
+photo_features: List[dict]
+renders: List[dict] (추후)
+
+그리고 pack_facts_*에서:
+
+“필수키 검사 + list로 담기”만 추가.
+
+3) KG Builder에서 “노드/엣지 규칙”만 확장
+
+지금의 User→Profile→Session→RecItem→Plant에 더해서 예를 들면:
+
+Session -> USED_PHOTO -> Photo
+Photo -> HAS_SPOT -> Spot
+Spot -> HAS_LIGHT -> LightCondition
+(추후) Spot -> HAS_RENDER -> Render
+
+그리고 “나머지 컬럼은 ATTR_” 규칙은 그대로 유지.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

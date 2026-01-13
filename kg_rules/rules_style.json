@@ -8,7 +8,11 @@
       "group": "STYLE",
       "when": {
         "all": [
-          { "fact": "user.style_likes", "op": "overlap_any", "value_ref": "plant.style_tags" }
+          {
+            "fact": "user.style_likes",
+            "op": "overlap_any",
+            "value_ref": "plant.style_tags"
+          }
         ]
       },
       "then": {
@@ -17,8 +21,136 @@
         "reason_code": "STYLE_MATCH",
         "explanation_template": "선호한 스타일 태그와 {plant.name_ko} 분위기가 비슷해서 더 추천했어요.",
         "evidence": [
-          { "field": "plants.style_tags", "value_ref": "plant.style_tags" },
-          { "field": "user_profile.style_likes", "value_ref": "user.style_likes" }
+          {
+            "field": "plants.style_tags",
+            "value_ref": "plant.style_tags"
+          },
+          {
+            "field": "user_profile.style_likes",
+            "value_ref": "user.style_likes"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ST002",
+      "priority": 35,
+      "type": "soft",
+      "group": "STYLE",
+      "when": {
+        "all": [
+          {
+            "fact": "user.style_likes",
+            "op": "exists"
+          },
+          {
+            "fact": "plant.style_tags",
+            "op": "exists"
+          },
+          {
+            "fact": "user.style_likes",
+            "op": "overlap_any",
+            "value_ref": "plant.style_tags",
+            "negate": true
+          }
+        ]
+      },
+      "then": {
+        "action": "DOWNRANK",
+        "delta": 4,
+        "reason_code": "STYLE_MISMATCH",
+        "explanation_template": "선호한 스타일과 {plant.name_ko} 스타일 태그가 겹치지 않아서 우선순위를 조금 낮췄어요.",
+        "evidence": [
+          {
+            "field": "plants.style_tags",
+            "value_ref": "plant.style_tags"
+          },
+          {
+            "field": "user_profile.style_likes",
+            "value_ref": "user.style_likes"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ST004",
+      "priority": 100,
+      "type": "hard",
+      "group": "STYLE",
+      "when": {
+        "all": [
+          {
+            "fact": "rule.last_fired_id",
+            "op": "eq",
+            "value": "ST001"
+          }
+        ]
+      },
+      "then": {
+        "action": "SET_EXPLANATION_TEMPLATE",
+        "reason_code": "EXPLAIN_GROUNDED",
+        "explanation_template": "선호한 스타일 태그({evidence.style_overlap})와 {plant.name_ko}의 스타일 태그가 겹쳐서 추천했어요.",
+        "evidence": [
+          {
+            "field": "derived.style_overlap",
+            "value_ref": "intersection(user.style_likes, plant.style_tags)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ST005",
+      "priority": 90,
+      "type": "hard",
+      "group": "STYLE",
+      "when": {
+        "any": [
+          {
+            "fact": "plant.style_tags",
+            "op": "not_exists"
+          },
+          {
+            "fact": "user.style_likes",
+            "op": "not_exists"
+          }
+        ]
+      },
+      "then": {
+        "action": "DISABLE_EXPLANATION",
+        "reason_code": "NO_EVIDENCE_STYLE",
+        "explanation_template": "",
+        "evidence": []
+      }
+    },
+    {
+      "id": "ST006",
+      "priority": 30,
+      "type": "soft",
+      "group": "STYLE",
+      "when": {
+        "all": [
+          {
+            "fact": "plant.style_tags",
+            "op": "contains_any",
+            "value": [
+              "예쁨",
+              "무드",
+              "감성",
+              "깔끔"
+            ]
+          }
+        ]
+      },
+      "then": {
+        "action": "DOWNRANK",
+        "delta": 2,
+        "reason_code": "STYLE_TAG_TOO_GENERIC",
+        "explanation_template": "스타일 태그가 다소 일반적이라 스타일 매칭 가중치를 조금 줄였어요.",
+        "evidence": [
+          {
+            "field": "plants.style_tags",
+            "value_ref": "plant.style_tags"
+          }
         ]
       }
     }

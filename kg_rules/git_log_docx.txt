@@ -1,0 +1,9 @@
+26/1/12
+$ git reflog show feature/mirr_kg
+3f94e5c (HEAD -> feature/mirr_kg, origin/develop) feature/mirr_kg@{0}: pull origin develop: Fast-forward
+6b6da25 (origin/main, main) feature/mirr_kg@{1}: branch: Created from main
+
+- pull 받고 따로 추가한 내용 없음
+- models 에 모델 받음
+- .env에 key값잇음 
+- branch(feature/mirr_kg) push 완료(.env, model은 절대 never ever 올리지 말기 xxx)

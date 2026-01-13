@@ -100,6 +100,13 @@
     "CARE_DEMAND": { "label_ko": "관리 요구도" },
     "STYLE_MATCH": { "label_ko": "스타일 취향" },
     "SPACE_MATCH": { "label_ko": "배치 공간" },
-    "PLACEMENT_BEST": { "label_ko": "사진 배치" }
+    "PLACEMENT_BEST": { "label_ko": "사진 배치" },
+    "LIGHT_TOO_LOW": { "label_ko": "광량 부족" },
+    "DIST_NEAR_MATCH": { "label_ko": "창문거리 근접" },
+    "TEMP_MISMATCH": { "label_ko": "온도 불일치" },
+    "WATERING_RISK_OVER": { "label_ko": "과습 위험" },
+    "WATERING_RISK_DRY": { "label_ko": "건조 위험" },
+    "PLACEMENT_RISK": { "label_ko": "배치 리스크" },
+    "KID_CAUTION": { "label_ko": "아이 주의" }
   }
 }
