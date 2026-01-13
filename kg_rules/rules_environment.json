@@ -1,0 +1,129 @@
+{
+  "module_id": "environment",
+  "rules": [
+    {
+      "id": "E020",
+      "priority": 80,
+      "type": "soft",
+      "group": "ENV_LIGHT",
+      "when": {
+        "all": [
+          { "fact": "env.light_min", "op": "rank_gte", "value_ref": "plant.light_min", "rank_map": "LIGHT_RANK" },
+          { "fact": "env.light_max", "op": "rank_lte", "value_ref": "plant.light_max", "rank_map": "LIGHT_RANK" }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 15,
+        "reason_code": "LIGHT_MATCH",
+        "explanation_template": "집의 광환경이 {plant.name_ko}가 좋아하는 빛 조건과 잘 맞아서 점수를 올렸어요.",
+        "evidence": [
+          { "field": "plants.light_min", "value_ref": "plant.light_min" },
+          { "field": "plants.light_max", "value_ref": "plant.light_max" }
+        ]
+      }
+    },
+    {
+      "id": "E021",
+      "priority": 75,
+      "type": "soft",
+      "group": "ENV_LIGHT",
+      "when": {
+        "all": [
+          { "fact": "env.direct_sun", "op": "rank_lte", "value_ref": "plant.direct_sun", "rank_map": "DIRECT_SUN_RANK" }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 5,
+        "reason_code": "SUN_MATCH",
+        "explanation_template": "직사광 조건이 {plant.name_ko}의 내성과 잘 맞아요.",
+        "evidence": [
+          { "field": "plants.direct_sun", "value_ref": "plant.direct_sun" }
+        ]
+      }
+    },
+    {
+      "id": "E030",
+      "priority": 70,
+      "type": "soft",
+      "group": "ENV_LIGHT",
+      "when": {
+        "all": [
+          { "fact": "env.window_distance", "op": "rank_eq", "value_ref": "plant.window_distance", "rank_map": "WINDOW_DIST_RANK" }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 6,
+        "reason_code": "DIST_MATCH",
+        "explanation_template": "창문과의 거리 조건이 {plant.name_ko} 권장 범위랑 비슷해서 좋아요.",
+        "evidence": [
+          { "field": "plants.window_distance", "value_ref": "plant.window_distance" }
+        ]
+      }
+    },
+    {
+      "id": "E040",
+      "priority": 65,
+      "type": "soft",
+      "group": "ENV_TEMP",
+      "when": {
+        "all": [
+          { "fact": "env.temp_min_c", "op": ">=", "value_ref": "plant.temp_min_c" },
+          { "fact": "env.temp_max_c", "op": "<=", "value_ref": "plant.temp_max_c" }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 10,
+        "reason_code": "TEMP_MATCH",
+        "explanation_template": "실내 온도 범위가 {plant.name_ko}의 적정 온도와 잘 맞아요.",
+        "evidence": [
+          { "field": "plants.temp_min_c", "value_ref": "plant.temp_min_c" },
+          { "field": "plants.temp_max_c", "value_ref": "plant.temp_max_c" }
+        ]
+      }
+    },
+    {
+      "id": "E050",
+      "priority": 60,
+      "type": "soft",
+      "group": "ENV_HUMID",
+      "when": {
+        "all": [
+          { "fact": "env.humidity_pref", "op": "==", "value_ref": "plant.humidity_pref" }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 6,
+        "reason_code": "HUMID_MATCH",
+        "explanation_template": "실내 습도 성향이 {plant.name_ko} 선호도랑 잘 맞아요.",
+        "evidence": [
+          { "field": "plants.humidity_pref", "value_ref": "plant.humidity_pref" }
+        ]
+      }
+    },
+    {
+      "id": "E060",
+      "priority": 58,
+      "type": "soft",
+      "group": "ENV_SPACE",
+      "when": {
+        "all": [
+          { "fact": "plant.recommended_space", "op": "contains", "value_ref": "env.space_type" }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 8,
+        "reason_code": "SPACE_MATCH",
+        "explanation_template": "{plant.name_ko}는 배치 공간({env.space_type})에 잘 어울리는 편이라 점수를 올렸어요.",
+        "evidence": [
+          { "field": "plants.recommended_space", "value_ref": "plant.recommended_space" }
+        ]
+      }
+    }
+  ]
+}

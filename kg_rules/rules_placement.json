@@ -1,0 +1,47 @@
+{
+  "module_id": "placement",
+  "rules": [
+    {
+      "id": "P001",
+      "priority": 30,
+      "type": "soft",
+      "group": "PLACEMENT",
+      "when": {
+        "all": [
+          { "fact": "placement.free_area_score", "op": ">=", "value": 0.7 },
+          { "fact": "placement.occlusion_risk", "op": "<=", "value": 0.4 }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 12,
+        "reason_code": "PLACEMENT_BEST",
+        "explanation_template": "사진에서 비어있는 공간이 충분하고 가림 위험이 낮아서 {plant.name_ko}를 보기 좋은 위치에 배치했어요.",
+        "evidence": [
+          { "field": "placement.free_area_score", "value_ref": "placement.free_area_score" },
+          { "field": "placement.occlusion_risk", "value_ref": "placement.occlusion_risk" }
+        ]
+      }
+    },
+    {
+      "id": "P010",
+      "priority": 28,
+      "type": "soft",
+      "group": "PLACEMENT",
+      "when": {
+        "all": [
+          { "fact": "placement.brightness_score", "op": ">=", "value": 0.7 }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 6,
+        "reason_code": "PLACEMENT_BEST",
+        "explanation_template": "사진 속 밝은 영역이어서 식물이 더 자연스럽게 어울리게 배치할 수 있었어요.",
+        "evidence": [
+          { "field": "placement.brightness_score", "value_ref": "placement.brightness_score" }
+        ]
+      }
+    }
+  ]
+}

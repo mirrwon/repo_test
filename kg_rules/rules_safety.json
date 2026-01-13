@@ -1,0 +1,81 @@
+{
+  "module_id": "safety",
+  "rules": [
+    {
+      "id": "S001",
+      "priority": 120,
+      "type": "hard",
+      "group": "SAFETY",
+      "when": {
+        "all": [
+          { "fact": "user.has_pet", "op": "==", "value": true },
+          { "fact": "plant.pet_caution", "op": "==", "value": 1 }
+        ]
+      },
+      "then": {
+        "action": "EXCLUDE",
+        "reason_code": "PET_SAFETY",
+        "explanation_template": "반려동물이 있는 환경에서는 {plant.name_ko}가(이) 안전상 주의가 필요해 제외했어요.",
+        "evidence": [
+          {
+            "field": "plants.pet_caution",
+            "value_ref": "plant.pet_caution",
+            "claim_ref": "plant.claims.pet_safety",
+            "source_id_ref": "plant.claims.pet_safety.source_id"
+          }
+        ]
+      }
+    },
+    {
+      "id": "S010",
+      "priority": 115,
+      "type": "hard",
+      "group": "SAFETY",
+      "when": {
+        "all": [
+          { "fact": "user.has_kid", "op": "==", "value": true },
+          { "fact": "plant.kid_safety_grade", "op": "in", "value": ["DANGER"] }
+        ]
+      },
+      "then": {
+        "action": "EXCLUDE",
+        "reason_code": "KID_SAFETY",
+        "explanation_template": "아이 환경에서는 {plant.name_ko}가(이) 위험 등급이라 제외했어요.",
+        "evidence": [
+          {
+            "field": "plants.kid_safety_grade",
+            "value_ref": "plant.kid_safety_grade",
+            "claim_ref": "plant.claims.kid_safety",
+            "source_id_ref": "plant.claims.kid_safety.source_id"
+          }
+        ]
+      }
+    },
+    {
+      "id": "S020",
+      "priority": 110,
+      "type": "hard",
+      "group": "SAFETY",
+      "when": {
+        "all": [
+          { "fact": "user.allergy_sensitive", "op": "==", "value": true },
+          { "fact": "plant.human_allergy_caution", "op": "==", "value": 1 }
+        ]
+      },
+      "then": {
+        "action": "DOWNRANK",
+        "delta": -30,
+        "reason_code": "ALLERGY",
+        "explanation_template": "알러지 민감도가 있어서 {plant.name_ko}는 알러지 유발 가능성 때문에 점수를 낮췄어요.",
+        "evidence": [
+          {
+            "field": "plants.human_allergy_caution",
+            "value_ref": "plant.human_allergy_caution",
+            "claim_ref": "plant.claims.human_allergy",
+            "source_id_ref": "plant.claims.human_allergy.source_id"
+          }
+        ]
+      }
+    }
+  ]
+}

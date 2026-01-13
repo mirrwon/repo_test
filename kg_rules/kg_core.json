@@ -1,0 +1,105 @@
+{
+  "version": "v1.2-core",
+  "engine": {
+    "name": "ditto_rule_engine",
+    "rule_order": "priority_desc",
+    "stop_on_exclude": true,
+    "max_recommendations": 10,
+    "scoring": {
+      "base_score": 50,
+      "min_score": 0,
+      "max_score": 100,
+      "delta_cap_per_rule": { "DOWNRANK": -50, "UPRANK": 50 },
+      "group_caps": {
+        "SAFETY": { "min": -100, "max": 0 },
+        "ENV_LIGHT": { "min": -30, "max": 20 },
+        "ENV_TEMP": { "min": -25, "max": 15 },
+        "ENV_HUMID": { "min": -15, "max": 10 },
+        "ENV_SPACE": { "min": -20, "max": 10 },
+        "LIFESTYLE": { "min": -25, "max": 15 },
+        "STYLE": { "min": -10, "max": 10 },
+        "PLACEMENT": { "min": -20, "max": 20 }
+      }
+    },
+    "explain": {
+      "include_reason_codes": true,
+      "include_evidence": true,
+      "max_reasons_per_item": 4,
+      "tone": "friendly_short",
+      "reason_pick_strategy": "one_per_group"
+    }
+  },
+  "schema": {
+    "facts": {
+      "user.has_pet": { "type": "boolean" },
+      "user.has_kid": { "type": "boolean" },
+      "user.allergy_sensitive": { "type": "boolean" },
+      "user.skill_level": { "type": "enum", "values": ["초보", "중급", "고급"] },
+      "user.watering_habit": { "type": "enum", "values": ["잊음", "보통", "자주"] },
+      "user.style_likes": { "type": "list_string" },
+
+      "env.light_min": { "type": "enum", "values": ["저광", "중간광", "밝은간접광"] },
+      "env.light_max": { "type": "enum", "values": ["저광", "중간광", "밝은간접광"] },
+      "env.direct_sun": { "type": "enum", "values": ["불가", "주의", "가능"] },
+      "env.window_distance": { "type": "enum", "values": ["0~50cm", "50~150cm", "150~300cm", "300cm+"] },
+      "env.temp_min_c": { "type": "number" },
+      "env.temp_max_c": { "type": "number" },
+      "env.humidity_pref": { "type": "enum", "values": ["건조OK", "보통", "고습선호"] },
+      "env.space_type": { "type": "enum", "values": ["책상", "선반", "바닥", "행잉", "창가", "욕실", "주방", "베란다", "기타"] },
+
+      "plant.name_ko": { "type": "string" },
+
+      "plant.care_difficulty": { "type": "enum", "values": ["쉬움", "보통", "어려움"] },
+      "plant.care_demand": { "type": "enum", "values": ["낮음", "중간", "높음"] },
+      "plant.growth_speed": { "type": "enum", "values": ["느림", "보통", "빠름"] },
+
+      "plant.light_min": { "type": "enum", "values": ["저광", "중간광", "밝은간접광"] },
+      "plant.light_max": { "type": "enum", "values": ["저광", "중간광", "밝은간접광"] },
+      "plant.direct_sun": { "type": "enum", "values": ["불가", "주의", "가능"] },
+      "plant.window_distance": { "type": "enum", "values": ["0~50cm", "50~150cm", "150~300cm", "300cm+"] },
+
+      "plant.temp_min_c": { "type": "number" },
+      "plant.temp_max_c": { "type": "number" },
+      "plant.winter_min_c": { "type": "number" },
+      "plant.humidity_pref": { "type": "enum", "values": ["건조OK", "보통", "고습선호"] },
+
+      "plant.watering_spring": { "type": "enum", "values": ["겉흙 마르면 듬뿍", "건조 후 물주기", "항상 촉촉(과습주의)", "소량 자주"] },
+      "plant.watering_summer": { "type": "enum", "values": ["겉흙 마르면 듬뿍", "건조 후 물주기", "항상 촉촉(과습주의)", "소량 자주"] },
+      "plant.watering_fall":   { "type": "enum", "values": ["겉흙 마르면 듬뿍", "건조 후 물주기", "항상 촉촉(과습주의)", "소량 자주"] },
+      "plant.watering_winter": { "type": "enum", "values": ["겉흙 마르면 듬뿍", "건조 후 물주기", "항상 촉촉(과습주의)", "소량 자주"] },
+
+      "plant.style_tags": { "type": "list_string" },
+      "plant.recommended_space": { "type": "list_string" },
+
+      "plant.human_allergy_caution": { "type": "number" },
+      "plant.pet_caution": { "type": "number" },
+      "plant.kid_safety_grade": { "type": "enum", "values": ["SAFE", "CAUTION", "DANGER", "UNKNOWN"] },
+
+      "placement.free_area_score": { "type": "number" },
+      "placement.brightness_score": { "type": "number" },
+      "placement.balance_score": { "type": "number" },
+      "placement.occlusion_risk": { "type": "number" }
+    },
+    "derived_maps": {
+      "LIGHT_RANK": { "저광": 1, "중간광": 2, "밝은간접광": 3 },
+      "DIRECT_SUN_RANK": { "불가": 1, "주의": 2, "가능": 3 },
+      "WINDOW_DIST_RANK": { "0~50cm": 1, "50~150cm": 2, "150~300cm": 3, "300cm+": 4 }
+    }
+  },
+  "reason_codes": {
+    "PET_SAFETY": { "label_ko": "반려동물 안전" },
+    "KID_SAFETY": { "label_ko": "아이 환경" },
+    "ALLERGY": { "label_ko": "알러지 주의" },
+    "BEGINNER_FRIENDLY": { "label_ko": "초보 난이도" },
+    "LIGHT_MATCH": { "label_ko": "광량 적합" },
+    "SUN_MATCH": { "label_ko": "직사광 조건" },
+    "DIST_MATCH": { "label_ko": "창문 거리" },
+    "TEMP_MATCH": { "label_ko": "온도 적합" },
+    "HUMID_MATCH": { "label_ko": "습도 적합" },
+    "WATERING_HABIT": { "label_ko": "물주기 습관" },
+    "CARE_DEMAND": { "label_ko": "관리 요구도" },
+    "STYLE_MATCH": { "label_ko": "스타일 취향" },
+    "SPACE_MATCH": { "label_ko": "배치 공간" },
+    "PLACEMENT_BEST": { "label_ko": "사진 배치" }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "module_id": "lifestyle",
+  "rules": [
+    {
+      "id": "L001",
+      "priority": 55,
+      "type": "soft",
+      "group": "LIFESTYLE",
+      "when": {
+        "all": [
+          { "fact": "user.skill_level", "op": "==", "value": "초보" },
+          { "fact": "plant.care_difficulty", "op": "==", "value": "어려움" }
+        ]
+      },
+      "then": {
+        "action": "DOWNRANK",
+        "delta": -20,
+        "reason_code": "BEGINNER_FRIENDLY",
+        "explanation_template": "초보 기준에서 {plant.name_ko}는 관리 난이도가 높아서 우선순위를 낮췄어요.",
+        "evidence": [
+          { "field": "plants.care_difficulty", "value_ref": "plant.care_difficulty" },
+          { "field": "user_profile.skill_level", "value_ref": "user.skill_level" }
+        ]
+      }
+    },
+    {
+      "id": "L010",
+      "priority": 52,
+      "type": "soft",
+      "group": "LIFESTYLE",
+      "when": {
+        "any": [
+          {
+            "all": [
+              { "fact": "user.watering_habit", "op": "==", "value": "잊음" },
+              { "fact": "plant.watering_winter", "op": "in", "value": ["건조 후 물주기", "겉흙 마르면 듬뿍"] }
+            ]
+          },
+          {
+            "all": [
+              { "fact": "user.watering_habit", "op": "==", "value": "자주" },
+              { "fact": "plant.watering_summer", "op": "in", "value": ["항상 촉촉(과습주의)", "소량 자주"] }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 10,
+        "reason_code": "WATERING_HABIT",
+        "explanation_template": "물주는 습관이 {plant.name_ko} 물주기 성향과 잘 맞아서 점수를 올렸어요.",
+        "evidence": [
+          { "field": "user_profile.watering_habit", "value_ref": "user.watering_habit" },
+          { "field": "plants.watering_summer", "value_ref": "plant.watering_summer" },
+          { "field": "plants.watering_winter", "value_ref": "plant.watering_winter" }
+        ]
+      }
+    },
+    {
+      "id": "L020",
+      "priority": 50,
+      "type": "soft",
+      "group": "LIFESTYLE",
+      "when": {
+        "all": [
+          { "fact": "user.skill_level", "op": "==", "value": "초보" },
+          { "fact": "plant.care_demand", "op": "==", "value": "높음" }
+        ]
+      },
+      "then": {
+        "action": "DOWNRANK",
+        "delta": -10,
+        "reason_code": "CARE_DEMAND",
+        "explanation_template": "{plant.name_ko}는 관리 요구도가 높은 편이라 초보에게는 조금 부담일 수 있어요.",
+        "evidence": [
+          { "field": "plants.care_demand", "value_ref": "plant.care_demand" }
+        ]
+      }
+    }
+  ]
+}
