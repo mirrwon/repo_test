@@ -1,9 +1,67 @@
 {
-  "version": "v1",
+  "version": "v1.1",
+  "engine": {
+    "name": "ditto_rule_engine",
+    "rule_order": "priority_desc",
+    "stop_on_exclude": true,
+    "max_recommendations": 10,
+    "scoring": {
+      "base_score": 50,
+      "min_score": 0,
+      "max_score": 100,
+      "delta_cap_per_rule": {
+        "DOWNRANK": -50,
+        "UPRANK": 50
+      }
+    },
+    "explain": {
+      "include_reason_codes": true,
+      "include_evidence": true,
+      "max_reasons_per_item": 4,
+      "tone": "friendly_short"
+    }
+  },
+  "schema": {
+    "facts": {
+      "user.has_pet": { "type": "boolean" },
+      "user.has_kid": { "type": "boolean" },
+      "user.allergy_sensitive": { "type": "boolean" },
+      "user.skill_level": { "type": "enum", "values": ["초보", "중급", "고급"] },
+      "user.watering_habit": { "type": "enum", "values": ["잊음", "보통", "자주"] },
+
+      "env.light_min": { "type": "enum", "values": ["저광", "중간광", "밝은간접광"] },
+      "env.light_max": { "type": "enum", "values": ["저광", "중간광", "밝은간접광"] },
+      "env.direct_sun": { "type": "enum", "values": ["불가", "주의", "가능"] },
+      "env.temp_min_c": { "type": "number" },
+      "env.temp_max_c": { "type": "number" },
+      "env.humidity_pref": { "type": "enum", "values": ["건조OK", "보통", "고습선호"] },
+
+      "plant.pet_caution": { "type": "number" },
+      "plant.human_allergy_caution": { "type": "number" },
+      "plant.care_difficulty": { "type": "enum", "values": ["쉬움", "보통", "어려움"] },
+      "plant.light_min": { "type": "enum", "values": ["저광", "중간광", "밝은간접광"] },
+      "plant.light_max": { "type": "enum", "values": ["저광", "중간광", "밝은간접광"] },
+      "plant.direct_sun": { "type": "enum", "values": ["불가", "주의", "가능"] },
+      "plant.temp_min_c": { "type": "number" },
+      "plant.temp_max_c": { "type": "number" },
+      "plant.humidity_pref": { "type": "enum", "values": ["건조OK", "보통", "고습선호"] },
+      "plant.growth_speed": { "type": "enum", "values": ["느림", "보통", "빠름"] }
+    }
+  },
+  "reason_codes": {
+    "PET_SAFETY": { "label_ko": "반려동물 안전" },
+    "ALLERGY": { "label_ko": "알러지 주의" },
+    "BEGINNER_FRIENDLY": { "label_ko": "초보 난이도" },
+    "LIGHT_MATCH": { "label_ko": "광량 적합" },
+    "TEMP_MATCH": { "label_ko": "온도 적합" },
+    "WATERING_HABIT": { "label_ko": "물주기 습관" },
+    "KID_SAFETY": { "label_ko": "아이 환경" }
+  },
   "rules": [
     {
       "id": "R001",
       "priority": 100,
+      "type": "hard",
       "when": {
         "all": [
           { "fact": "user.has_pet", "op": "==", "value": true },
@@ -13,12 +71,36 @@
       "then": {
         "action": "EXCLUDE",
         "reason_code": "PET_SAFETY",
-        "explanation_template": "반려동물이 있는 환경에서는 {plant.name_ko}가(이) 안전상 주의가 필요해 제외했어요."
+        "explanation_template": "반려동물이 있는 환경에서는 {plant.name_ko}가(이) 안전상 주의가 필요해 제외했어요.",
+        "evidence": [
+          { "source": "plants.pet_caution", "value_ref": "plant.pet_caution" }
+        ]
+      }
+    },
+    {
+      "id": "R010",
+      "priority": 95,
+      "type": "hard",
+      "when": {
+        "all": [
+          { "fact": "user.has_kid", "op": "==", "value": true },
+          { "fact": "plant.pet_caution", "op": "==", "value": 1 }
+        ]
+      },
+      "then": {
+        "action": "DOWNRANK",
+        "delta": -25,
+        "reason_code": "KID_SAFETY",
+        "explanation_template": "아이와 함께라면 {plant.name_ko}는 접촉 시 주의가 필요해서 우선순위를 낮췄어요.",
+        "evidence": [
+          { "source": "plants.pet_caution", "value_ref": "plant.pet_caution" }
+        ]
       }
     },
     {
       "id": "R002",
       "priority": 80,
+      "type": "soft",
       "when": {
         "all": [
           { "fact": "user.allergy_sensitive", "op": "==", "value": true },
@@ -29,12 +111,16 @@
         "action": "DOWNRANK",
         "delta": -30,
         "reason_code": "ALLERGY",
-        "explanation_template": "알러지 민감도가 있어서 {plant.name_ko}는 알러지 유발 가능성 때문에 점수를 낮췄어요."
+        "explanation_template": "알러지 민감도가 있어서 {plant.name_ko}는 알러지 유발 가능성 때문에 점수를 낮췄어요.",
+        "evidence": [
+          { "source": "plants.human_allergy_caution", "value_ref": "plant.human_allergy_caution" }
+        ]
       }
     },
     {
       "id": "R003",
       "priority": 50,
+      "type": "soft",
       "when": {
         "all": [
           { "fact": "user.skill_level", "op": "==", "value": "초보" },
@@ -45,7 +131,85 @@
         "action": "DOWNRANK",
         "delta": -20,
         "reason_code": "BEGINNER_FRIENDLY",
-        "explanation_template": "초보 기준에서 관리 난이도가 높은 {plant.name_ko}는 추천 우선순위를 낮췄어요."
+        "explanation_template": "초보 기준에서 관리 난이도가 높은 {plant.name_ko}는 추천 우선순위를 낮췄어요.",
+        "evidence": [
+          { "source": "plants.care_difficulty", "value_ref": "plant.care_difficulty" },
+          { "source": "user_profile.skill_level", "value_ref": "user.skill_level" }
+        ]
+      }
+    },
+    {
+      "id": "R020",
+      "priority": 60,
+      "type": "soft",
+      "when": {
+        "all": [
+          { "fact": "env.light_min", "op": ">=", "value_ref": "plant.light_min" },
+          { "fact": "env.light_max", "op": "<=", "value_ref": "plant.light_max" }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 15,
+        "reason_code": "LIGHT_MATCH",
+        "explanation_template": "집의 광환경이 {plant.name_ko}가 좋아하는 빛 조건과 잘 맞아서 추천 점수를 올렸어요.",
+        "evidence": [
+          { "source": "plants.light_min", "value_ref": "plant.light_min" },
+          { "source": "plants.light_max", "value_ref": "plant.light_max" }
+        ]
+      }
+    },
+    {
+      "id": "R021",
+      "priority": 55,
+      "type": "soft",
+      "when": {
+        "all": [
+          { "fact": "env.temp_min_c", "op": ">=", "value_ref": "plant.temp_min_c" },
+          { "fact": "env.temp_max_c", "op": "<=", "value_ref": "plant.temp_max_c" }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 10,
+        "reason_code": "TEMP_MATCH",
+        "explanation_template": "실내 온도 범위가 {plant.name_ko}의 적정 온도와 잘 맞아요.",
+        "evidence": [
+          { "source": "plants.temp_min_c", "value_ref": "plant.temp_min_c" },
+          { "source": "plants.temp_max_c", "value_ref": "plant.temp_max_c" }
+        ]
+      }
+    },
+    {
+      "id": "R030",
+      "priority": 45,
+      "type": "soft",
+      "when": {
+        "any": [
+          {
+            "all": [
+              { "fact": "user.watering_habit", "op": "==", "value": "잊음" },
+              { "fact": "plant.growth_speed", "op": "in", "value": ["느림"] }
+            ]
+          },
+          {
+            "all": [
+              { "fact": "user.watering_habit", "op": "==", "value": "자주" },
+              { "fact": "plant.humidity_pref", "op": "==", "value": "고습선호" }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "action": "UPRANK",
+        "delta": 8,
+        "reason_code": "WATERING_HABIT",
+        "explanation_template": "물주는 습관과 {plant.name_ko}의 선호 환경이 잘 맞아서 추천 점수를 살짝 올렸어요.",
+        "evidence": [
+          { "source": "user_profile.watering_habit", "value_ref": "user.watering_habit" },
+          { "source": "plants.humidity_pref", "value_ref": "plant.humidity_pref" },
+          { "source": "plants.growth_speed", "value_ref": "plant.growth_speed" }
+        ]
       }
     }
   ]
